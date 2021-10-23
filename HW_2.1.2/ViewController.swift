@@ -15,12 +15,15 @@ class ViewController: UIViewController {
     @IBOutlet var greenLightSignal: UIView!
     @IBOutlet var changeButtonText: UIButton!
     
+    private let lightIsOn: CGFloat = 1
+    private let lightIsOff: CGFloat = 0.3
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        redLightSignal.alpha = 0.3
-        yellowLightSignal.alpha = 0.3
-        greenLightSignal.alpha = 0.3
+        redLightSignal.alpha = lightIsOff
+        yellowLightSignal.alpha = lightIsOff
+        greenLightSignal.alpha = lightIsOff
         
         redLightSignal.layer.cornerRadius = 70
         yellowLightSignal.layer.cornerRadius = 70
@@ -30,24 +33,19 @@ class ViewController: UIViewController {
     }
 
     @IBAction func changeLight() {
-        if redLightSignal.alpha == 0.3
-            && yellowLightSignal.alpha == 0.3
-            && greenLightSignal.alpha == 0.3 {
-            
-            redLightSignal.alpha = 1
+        if changeButtonText.currentTitle == "START" {
+            changeButtonText.setTitle("NEXT", for: .normal)
         }
         
-        changeButtonText.setTitle("NEXT", for: .normal)
-        
-        if redLightSignal.alpha == 1 {
-            redLightSignal.alpha = 0.3
-            yellowLightSignal.alpha = 1
-        } else if yellowLightSignal.alpha == 1 {
-            yellowLightSignal.alpha = 0.3
-            greenLightSignal.alpha = 1
+        if redLightSignal.alpha == lightIsOn {
+            redLightSignal.alpha = lightIsOff
+            yellowLightSignal.alpha = lightIsOn
+        } else if yellowLightSignal.alpha == lightIsOn {
+            yellowLightSignal.alpha = lightIsOff
+            greenLightSignal.alpha = lightIsOn
         } else {
-            greenLightSignal.alpha = 0.3
-            redLightSignal.alpha = 1
+            greenLightSignal.alpha = lightIsOff
+            redLightSignal.alpha = lightIsOn
         }
         
     }
