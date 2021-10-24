@@ -7,6 +7,10 @@
 
 import UIKit
 
+enum CurrentLight {
+    case red, yellow, green
+}
+
 class ViewController: UIViewController {
 
     
@@ -17,6 +21,7 @@ class ViewController: UIViewController {
     
     private let lightIsOn: CGFloat = 1
     private let lightIsOff: CGFloat = 0.3
+    private var currentLight = CurrentLight.red
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,9 +30,9 @@ class ViewController: UIViewController {
         yellowLightSignal.alpha = lightIsOff
         greenLightSignal.alpha = lightIsOff
         
-        redLightSignal.layer.cornerRadius = 70
-        yellowLightSignal.layer.cornerRadius = 70
-        greenLightSignal.layer.cornerRadius = 70
+        redLightSignal.layer.cornerRadius = redLightSignal.frame.width / 2
+        yellowLightSignal.layer.cornerRadius = yellowLightSignal.frame.width / 2
+        greenLightSignal.layer.cornerRadius = greenLightSignal.frame.width / 2
         
         changeButtonText.setTitle("START", for: .normal)
     }
@@ -37,19 +42,22 @@ class ViewController: UIViewController {
             changeButtonText.setTitle("NEXT", for: .normal)
         }
         
-        if redLightSignal.alpha == lightIsOn {
-            redLightSignal.alpha = lightIsOff
-            yellowLightSignal.alpha = lightIsOn
-        } else if yellowLightSignal.alpha == lightIsOn {
-            yellowLightSignal.alpha = lightIsOff
-            greenLightSignal.alpha = lightIsOn
-        } else {
-            greenLightSignal.alpha = lightIsOff
+        switch currentLight {
+        case .red:
             redLightSignal.alpha = lightIsOn
+            greenLightSignal.alpha = lightIsOff
+            currentLight = .yellow
+        case .yellow:
+            yellowLightSignal.alpha = lightIsOn
+            redLightSignal.alpha = lightIsOff
+            currentLight = .green
+        case .green:
+            greenLightSignal.alpha = lightIsOn
+            yellowLightSignal.alpha = lightIsOff
+            currentLight = .red
         }
         
     }
-    
     
 }
 
